@@ -63,16 +63,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Send the email
     if(mail($to, $subject, $message, $headers)) {
         // Successful email sending
-        header("Location: thank_you.html"); // Redirect to a thank-you page
+        header("Location: final.html"); // Redirect to a thank-you page
         exit; // Exit the script
     } else {
         // Email sending failed
-        header("Location: error.html"); // Redirect to an error page
+        header("Location: final.html");// Redirect to an error page
         exit; // Exit the script
     }
 } else {
     // If not a POST request, redirect to an error or home page
-    header("Location: error.html");
+    header("Location: final.html");
     exit;
 }
 ?>
