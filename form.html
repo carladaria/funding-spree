@@ -274,7 +274,10 @@
             <div class="progress" id="progress"></div>
         </div>
         
-        <form id="questionForm" name="house-evaluation" method="POST" data-netlify="true" action="/final.html">
+        <form id="questionForm" name="house-evaluation" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/final.html">
+
+             <input type="hidden" name="form-name" value="house-evaluation" />
+             <input type="hidden" name="bot-field" />
 
             <!-- Question 1 -->
             <div class="question-slide active" data-question="1">
@@ -1034,9 +1037,18 @@
 
         // Add this event listener instead
 document.getElementById('questionForm').addEventListener('submit', (e) => {
-    // Form will be handled by Netlify
-    // The action="/final.html" in the form tag will handle the redirect
+    e.preventDefault();
+    const form = e.target;
+    fetch('/', {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form)).toString()
+    })
+    .then(() => {
+        window.location.href = '/final.html';
+    })
+    .catch((error) => console.log('Form submission error:', error));
 });
-    </script>
+</script>
 </body>
 </html>
