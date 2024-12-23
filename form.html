@@ -25,7 +25,6 @@
             padding: 1rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             z-index: 1000;
-            
         }
 
         .header-content {
@@ -47,7 +46,6 @@
             width: auto; /* Maintain aspect ratio */
             align-items: left;
         }
-       
 
         .phone {
             color: #1a365d;
@@ -276,13 +274,13 @@
             <div class="progress" id="progress"></div>
         </div>
         
-        <form id="questionForm" action="https://formspree.io/f/carla@fannypackstudios.com" method="POST">
+        <form id="questionForm" action="./process_form.php" method="POST"> <!-- Updated action here -->
 
             <!-- Question 1 -->
             <div class="question-slide active" data-question="1">
                 <h1>Let’s start your offer.</h1>
                 <p>Enter your address to get started. This helps us find sales data for your home and other homes nearby.</p>
-                <input type="text" id="addressInput" placeholder="Enter your address" oninput="checkAddress()">
+                <input type="text" id="addressInput" name="address" placeholder="Enter your address" oninput="checkAddress()" required>
             </div>
 
             <!-- Question 2 -->
@@ -319,7 +317,7 @@
                 <h1>When are you likely to sell your home?</h1>
                 <div class="radio-group">
                     <label class="radio-option">
-                        <input type="radio" name="timeframe" value="immediate">
+                        <input type="radio" name="timeframe" value="immediate" required>
                         Within the next month
                     </label>
                     <label class="radio-option">
@@ -348,7 +346,7 @@
                     <div class="formbold-form-wrapper">
                         <div class="formbold-mb-5">
                             <label for="bedrooms">Bedrooms:</label>
-                            <select id="bedrooms" class="formbold-select" onchange="checkSelection()">
+                            <select id="bedrooms" name="bedrooms" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
                                 <option value="1bedrooms">1</option>
                                 <option value="2bedrooms">2</option>
@@ -367,7 +365,7 @@
 
                         <div class="formbold-mb-5">
                             <label for="fullBathrooms">Full bathrooms:</label>
-                            <select id="fullBathrooms" class="formbold-select" onchange="checkSelection()">
+                            <select id="fullBathrooms" name="fullBathrooms" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
                                 <option value="1bathrooms">1</option>
                                 <option value="2bathrooms">2</option>
@@ -386,7 +384,7 @@
 
                         <div class="formbold-mb-5">
                             <label for="partialBathrooms">Partial bathrooms:</label>
-                            <select id="partialBathrooms" class="formbold-select" onchange="checkSelection()">
+                            <select id="partialBathrooms" name="partialBathrooms" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
                                 <option value="1Partialbathrooms">1</option>
                                 <option value="2Partialbathrooms">2</option>
@@ -405,14 +403,14 @@
 
                         <div class="formbold-mb-5">
                             <label for="squareFootage">Square footage (above ground):</label>
-                            <input type="text" id="squareFootage" class="formbold-input" placeholder="0ft²" onchange="checkSelection()">
+                            <input type="text" id="squareFootage" name="squareFootage" class="formbold-input" placeholder="0ft²" onchange="checkSelection()">
                             <p style="font-size:14px; color: #818181;">Don’t include basements, non-permitted additions, or non-heated square footage.</p>
                             <br>
                         </div>
 
                         <div class="formbold-mb-5">
                             <label for="floors">Floors (above ground):</label>
-                            <select id="floors" class="formbold-select" onchange="checkSelection()">
+                            <select id="floors" name="floors" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
                                 <option value="1Floors">1</option>
                                 <option value="2Floors">2</option>
@@ -424,7 +422,7 @@
 
                         <div class="formbold-mb-5">
                             <label for="basement">Basement:</label>
-                            <select id="basement" class="formbold-select" onchange="checkSelection()">
+                            <select id="basement" name="basement" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
                                 <option value="BasementYes">Yes</option>
                                 <option value="BasementNo">No</option>
@@ -435,12 +433,12 @@
 
                         <div class="formbold-mb-5">
                             <label for="yearBuilt">Year built:</label>
-                            <input type="text" id="yearBuilt" class="formbold-input" placeholder="E.g. 1994" onchange="checkSelection()">
+                            <input type="text" id="yearBuilt" name="yearBuilt" class="formbold-input" placeholder="E.g. 1994" onchange="checkSelection()">
                         </div>
                         <br>
                         <div class="formbold-mb-5">
                             <label for="pool">Pool:</label>
-                            <select id="pool" class="formbold-select" onchange="checkSelection()">
+                            <select id="pool" name="pool" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
                                 <option value="Nopool">No pool</option>
                                 <option value="Above-ground">Above-ground</option>
@@ -451,7 +449,7 @@
                         <br>
                         <div class="formbold-mb-5">
                             <label for="coveredParking">Covered parking:</label>
-                            <select id="coveredParking" class="formbold-select" onchange="checkSelection()">
+                            <select id="coveredParking" name="coveredParking" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
                                 <option value="Garage">Garage</option>
                                 <option value="Carport">Carport</option>
@@ -462,7 +460,7 @@
                         <br>
                         <div class="formbold-mb-5">
                             <label for="garageSpaces">Garage spaces:</label>
-                            <select id="garageSpaces" class="formbold-select" onchange="checkSelection()">
+                            <select id="garageSpaces" name="garageSpaces" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
                                 <option value="1garage">1</option>
                                 <option value="2garage">2</option>
@@ -503,7 +501,7 @@
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="countertops" value="othertile">
-                       Other tile
+                        Other tile
                     </label>
                 </div>
             </div>
@@ -530,7 +528,7 @@
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="appliances" value="otherappliances">
-                       Other 
+                        Other 
                     </label>
                 </div>
             </div>
@@ -811,63 +809,63 @@
                 <div class="formbold-radio-flex">
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations" id="motivation1" value="financial" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation1" value="financial" onchange="checkCheckboxSelection()" />
                             Leased or financed solar panels
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations" id="motivation2" value="relocation" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation2" value="relocation" onchange="checkCheckboxSelection()" />
                             Known foundation issues (Excessive cracking, uneven floors)
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations" id="motivation3" value="size" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation3" value="size" onchange="checkCheckboxSelection()" />
                             Fire damage
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations" id="motivation4" value="lifestyle" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation4" value="lifestyle" onchange="checkCheckboxSelection()" />
                             Well water (You maintain a well to supply water)
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations" id="motivation5" value="septic" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation5" value="septic" onchange="checkCheckboxSelection()" />
                             Septic system (Separate from municipal sewage)
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations" id="motivation6" value="asbestos" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation6" value="asbestos" onchange="checkCheckboxSelection()" />
                             Asbestos siding
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations" id="motivation7" value="horse" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation7" value="horse" onchange="checkCheckboxSelection()" />
                             Horse property (Livestock live on property)
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations" id="motivation8" value="mobile" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation8" value="mobile" onchange="checkCheckboxSelection()" />
                             Mobile or manufactured home
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations" id="motivation9" value="none" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation9" value="none" onchange="checkCheckboxSelection()" />
                             None of the above
                         </label>
                     </div>
@@ -960,7 +958,7 @@
                 document.getElementById('nextQuestionButton').disabled = false;
             } else if (questionNumber === 12) {
                 // Check if at least one checkbox is selected in Question 12
-                const checkboxes = document.querySelectorAll('input[name="motivations"]:checked');
+                const checkboxes = document.querySelectorAll('input[name="motivations[]"]:checked');
                 const nextButton = document.getElementById('nextQuestionButton');
                 nextButton.disabled = checkboxes.length === 0; // Disable the next button if none are checked
             } else if (questionNumber === 13) {
@@ -999,7 +997,7 @@
         });
 
         // Add change event listeners to all checkboxes in Question 12
-        document.querySelectorAll('input[name="motivations"]').forEach(checkbox => {
+        document.querySelectorAll('input[name="motivations[]"]').forEach(checkbox => {
             checkbox.addEventListener('change', () => {
                 checkQuestionAnswered(12); // Check if the next button should be enabled
             });
@@ -1040,7 +1038,7 @@
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData.entries());
             console.log(data);
-            // Handle form submission as needed
+            // Handle form submission as needed - you can optionally send this data via fetch or XMLHttpRequest
         });
     </script>
 </body>
