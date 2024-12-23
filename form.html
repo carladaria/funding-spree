@@ -1032,13 +1032,26 @@
             nextButton.disabled = !isEnabled; 
         }
 
-        // Submit form
-        document.getElementById('questionForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-            console.log(data);
-            // Handle form submission as needed - you can optionally send this data via fetch or XMLHttpRequest
+        // Submit form with Fetch API and redirect to final.html
+        document.getElementById('questionForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent default form submission behavior
+            const formData = new FormData(e.target); // Collect form data
+            
+            try {
+                const response = await fetch('./process_form.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    window.location.href = './final.html'; // Redirect on success
+                } else {
+                    // Handle the error if the server returns an error response
+                    console.error('There was a problem with the submission:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
         });
     </script>
 </body>
