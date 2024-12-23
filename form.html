@@ -274,7 +274,7 @@
             <div class="progress" id="progress"></div>
         </div>
         
-        <form id="questionForm" action="process_form.php" method="POST"> <!-- Updated action here -->
+        <form id="questionForm" name="house-evaluation" method="POST" data-netlify="true" action="/final.html">
 
             <!-- Question 1 -->
             <div class="question-slide active" data-question="1">
@@ -874,35 +874,35 @@
 
             <!-- Question 13 -->
             <div class="question-slide" data-question="13">
-                <h1>You're all set! Your offer is ready to go.</h1>
-                <p>Add your info so we know who it's for.</p>
-                <br>
-                
-                <div class="formbold-main-wrapper">
-                    <div class="formbold-form-wrapper">
-                        <div class="formbold-mb-5">
-                            <label for="name">Full name:</label>
-                            <input type="text" name="name" id="name" placeholder="Any Name" class="formbold-input" required />
-                        </div>
-
-                        <br>
-                        <br>
-
-                        <div class="formbold-mb-5">
-                            <label for="phone">Phone number:</label>
-                            <input type="tel" name="phone" id="phone" placeholder="000-000-0000" class="formbold-input" required />
-                        </div>
-
-                        <br>
-                        <br>
-
-                        <div class="formbold-mb-5">
-                            <label for="email">Email:</label>
-                            <input type="email" name="email" id="email" placeholder="Enter your email address" class="formbold-input" required />
-                        </div>
-                    </div>
-                </div>
+    <h1>You're all set! Your offer is ready to go.</h1>
+    <p>Add your info so we know who it's for.</p>
+    <br>
+    
+    <div class="formbold-main-wrapper">
+        <div class="formbold-form-wrapper">
+            <div class="formbold-mb-5">
+                <label for="name">Full name:</label>
+                <input type="text" name="name" id="name" placeholder="Any Name" class="formbold-input" required />
             </div>
+
+            <br>
+            <br>
+
+            <div class="formbold-mb-5">
+                <label for="phone">Phone number:</label>
+                <input type="tel" name="phone" id="phone" placeholder="000-000-0000" class="formbold-input" required />
+            </div>
+
+            <br>
+            <br>
+
+            <div class="formbold-mb-5">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email address" class="formbold-input" required />
+            </div>
+        </div>
+    </div>
+</div>
 
             <div class="buttons">
                 <button type="button" id="prevButton" class="button" style="display: none;">Previous</button>
@@ -1032,27 +1032,11 @@
             nextButton.disabled = !isEnabled; 
         }
 
-        // Submit form with Fetch API and redirect to final.html
-        document.getElementById('questionForm').addEventListener('submit', async (e) => {
-            e.preventDefault(); // Prevent default form submission behavior
-            const formData = new FormData(e.target); // Collect form data
-            
-            try {
-                const response = await fetch('process_form.php', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    window.location.href = 'final.html'; // Redirect on success
-                } else {
-                    // Handle the error if the server returns an error response
-                    console.error('There was a problem with the submission:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-            }
-        });
+        // Add this event listener instead
+document.getElementById('questionForm').addEventListener('submit', (e) => {
+    // Form will be handled by Netlify
+    // The action="/final.html" in the form tag will handle the redirect
+});
     </script>
 </body>
 </html>
