@@ -7,6 +7,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Raleway+Dots&family=Syncopate:wght@400;700&display=swap');
 
         * {
             margin: 0;
@@ -166,6 +167,10 @@
             position: fixed;
             bottom: 0;
             width: 100%;
+             font-family: "Syncopate", serif;
+             letter-spacing: 3px;
+             text-shadow: 2px 2px 8px #adadad;
+             font-size: 12px;
         }
 
         body {
@@ -291,19 +296,19 @@
                 <h1>What is your relationship to this home?</h1>
                 <div class="radio-group">
                     <label class="radio-option">
-                        <input type="radio" name="relationship" value="owner" required>
+                        <input type="radio" name="relationship" value="Owner of the house." required>
                         I am the owner of this home
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="relationship" value="agent">
+                        <input type="radio" name="relationship" value="Realtor or agent.">
                         I am a realtor or agent
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="relationship" value="both">
+                        <input type="radio" name="relationship" value="Homeowner and an agent.">
                         I am both the homeowner and an agent
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="relationship" value="other">
+                        <input type="radio" name="relationship" value="Other.">
                         Other
                     </label>
                 </div>
@@ -320,23 +325,23 @@
                 <h1>When are you likely to sell your home?</h1>
                 <div class="radio-group">
                     <label class="radio-option">
-                        <input type="radio" name="timeframe" value="immediate" required>
+                        <input type="radio" name="timeframe" value="Immediate." required>
                         Within the next month
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="timeframe" value="1-3months">
+                        <input type="radio" name="timeframe" value="1-3months.">
                         Within 1-3 months
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="timeframe" value="3-6months">
+                        <input type="radio" name="timeframe" value="3-6months.">
                         Within 3-6 months
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="timeframe" value="6plus">
+                        <input type="radio" name="timeframe" value="More than 6 months.">
                         More than 6 months
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="timeframe" value="browsing">
+                        <input type="radio" name="timeframe" value="Browsing.">
                         I'm just browsing
                     </label>
                 </div>
@@ -351,16 +356,16 @@
                             <label for="bedrooms">Bedrooms:</label>
                             <select id="bedrooms" name="bedrooms" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
-                                <option value="1bedrooms">1</option>
-                                <option value="2bedrooms">2</option>
-                                <option value="3bedrooms">3</option>
-                                <option value="4bedrooms">4</option>
-                                <option value="5bedrooms">5</option>
-                                <option value="6bedrooms">6</option>
-                                <option value="7bedrooms">7</option>
-                                <option value="8bedrooms">8</option>
-                                <option value="9bedrooms">9</option>
-                                <option value="10bedrooms">10</option>
+                                <option value="1 bedrooms.">1</option>
+                                <option value="2 bedrooms.">2</option>
+                                <option value="3 bedrooms.">3</option>
+                                <option value="4 bedrooms.">4</option>
+                                <option value="5 bedrooms.">5</option>
+                                <option value="6 bedrooms.">6</option>
+                                <option value="7 bedrooms.">7</option>
+                                <option value="8 bedrooms.">8</option>
+                                <option value="9 bedrooms.">9</option>
+                                <option value="10 bedrooms.">10</option>
                             </select>
                            <p style="font-size:14px; color: #818181;">Must have a door, closet, and window.</p>
                             <br>
@@ -370,16 +375,16 @@
                             <label for="fullBathrooms">Full bathrooms:</label>
                             <select id="fullBathrooms" name="fullBathrooms" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
-                                <option value="1bathrooms">1</option>
-                                <option value="2bathrooms">2</option>
-                                <option value="3bathrooms">3</option>
-                                <option value="4bathrooms">4</option>
-                                <option value="5bathrooms">5</option>
-                                <option value="6bathrooms">6</option>
-                                <option value="7bathrooms">7</option>
-                                <option value="8bathrooms">8</option>
-                                <option value="9bathrooms">9</option>
-                                <option value="10bathrooms">10</option>
+                                <option value="1 bathrooms.">1</option>
+                                <option value="2 bathrooms.">2</option>
+                                <option value="3 bathrooms.">3</option>
+                                <option value="4 bathrooms.">4</option>
+                                <option value="5 bathrooms.">5</option>
+                                <option value="6 bathrooms.">6</option>
+                                <option value="7 bathrooms.">7</option>
+                                <option value="8 bathrooms.">8</option>
+                                <option value="9 bathrooms.">9</option>
+                                <option value="10 bathrooms.">10</option>
                             </select>
                             <p style="font-size:14px; color: #818181;">Must have a toilet and a shower/tub.</p>
                             <br>
@@ -389,16 +394,16 @@
                             <label for="partialBathrooms">Partial bathrooms:</label>
                             <select id="partialBathrooms" name="partialBathrooms" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
-                                <option value="1Partialbathrooms">1</option>
-                                <option value="2Partialbathrooms">2</option>
-                                <option value="3Partialbathrooms">3</option>
-                                <option value="4Partialbathrooms">4</option>
-                                <option value="5Partialbathrooms">5</option>
-                                <option value="6Partialbathrooms">6</option>
-                                <option value="7Partialbathrooms">7</option>
-                                <option value="8Partialbathrooms">8</option>
-                                <option value="9Partialbathrooms">9</option>
-                                <option value="10Partialbathrooms">10</option>
+                                <option value="1 partial bathrooms.">1</option>
+                                <option value="2 Partial bathrooms.">2</option>
+                                <option value="3 Partial bathrooms.">3</option>
+                                <option value="4 Partial bathrooms.">4</option>
+                                <option value="5 Partial bathrooms.">5</option>
+                                <option value="6 Partial bathrooms.">6</option>
+                                <option value="7 Partial bathrooms.">7</option>
+                                <option value="8 Partial bathrooms.">8</option>
+                                <option value="9 Partial bathrooms.">9</option>
+                                <option value="10 Partial bathrooms.">10</option>
                             </select>
                             <p style="font-size:14px; color: #818181;">Must have a toilet and sink.</p>
                             <br>
@@ -415,9 +420,10 @@
                             <label for="floors">Floors (above ground):</label>
                             <select id="floors" name="floors" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
-                                <option value="1Floors">1</option>
-                                <option value="2Floors">2</option>
-                                <option value="3Floors">3</option>
+                                <option value="1 floors">1</option>
+                                <option value="2 floors">2</option>
+                                <option value="3 floors">3</option>
+                                <option value="4 floors">4</option>
                             </select>
                             <p style="font-size:14px; color: #818181;">Don't include the basement.</p>
                             <br>
@@ -427,8 +433,8 @@
                             <label for="basement">Basement:</label>
                             <select id="basement" name="basement" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
-                                <option value="BasementYes">Yes</option>
-                                <option value="BasementNo">No</option>
+                                <option value="Yes.">Yes</option>
+                                <option value="No.">No</option>
                             </select>
                             <p style="font-size:14px; color: #818181;">Floors that are completely below ground.</p>
                             <br>
@@ -443,10 +449,10 @@
                             <label for="pool">Pool:</label>
                             <select id="pool" name="pool" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
-                                <option value="Nopool">No pool</option>
-                                <option value="Above-ground">Above-ground</option>
-                                <option value="In-ground">In-ground</option>
-                                <option value="Community pool">Community pool</option>
+                                <option value="No pool.">No pool</option>
+                                <option value="Above-ground.">Above-ground</option>
+                                <option value="In-ground.">In-ground</option>
+                                <option value="Community pool.">Community pool</option>
                             </select>
                         </div>
                         <br>
@@ -454,10 +460,10 @@
                             <label for="coveredParking">Covered parking:</label>
                             <select id="coveredParking" name="coveredParking" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
-                                <option value="Garage">Garage</option>
-                                <option value="Carport">Carport</option>
-                                <option value="Both">Both</option>
-                                <option value="None">None</option>
+                                <option value="Garage.">Garage</option>
+                                <option value="Carport.">Carport</option>
+                                <option value="Both.">Both</option>
+                                <option value="None.">None</option>
                             </select>
                         </div>
                         <br>
@@ -465,15 +471,11 @@
                             <label for="garageSpaces">Garage spaces:</label>
                             <select id="garageSpaces" name="garageSpaces" class="formbold-select" onchange="checkSelection()">
                                 <option value="" disabled selected>Select your option</option>
-                                <option value="1garage">1</option>
-                                <option value="2garage">2</option>
-                                <option value="3garage">3</option>
-                                <option value="4garage">4</option>
-                                <option value="5garage">5</option>
-                                <option value="6garage">6</option>
-                                <option value="7garage">7</option>
-                                <option value="8garage">8</option>
-                                <option value="9garage">9</option>
+                                <option value="1.">1</option>
+                                <option value="2.">2</option>
+                                <option value="3.">3</option>
+                                <option value="4.">4</option>
+                                <option value="5.">5</option>
                                 <option value="Doesnotapply">Does not apply</option>
                             </select>
                         </div>
@@ -487,23 +489,23 @@
                 <h1>What kind of countertops does your kitchen have?</h1>
                 <div class="radio-group">
                     <label class="radio-option">
-                        <input type="radio" name="countertops" value="laminate" required>
+                        <input type="radio" name="countertops" value="Laminate / Formica." required>
                         Laminate / Formica
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="countertops" value="corian">
+                        <input type="radio" name="countertops" value="Corian.">
                         Corian
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="countertops" value="stone">
+                        <input type="radio" name="countertops" value="Solid stone slab.">
                         Solid stone slab
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="countertops" value="granite">
+                        <input type="radio" name="countertops" value="Granite tile.">
                         Granite tile
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="countertops" value="othertile">
+                        <input type="radio" name="countertops" value="Other tile.">
                         Other tile
                     </label>
                 </div>
@@ -514,23 +516,23 @@
                 <h1>How would you describe your kitchen appliances?</h1>
                 <div class="radio-group">
                     <label class="radio-option">
-                        <input type="radio" name="appliances" value="stainless" required>
+                        <input type="radio" name="appliances" value="Stainless." required>
                         Stainless appliances
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="appliances" value="black">
+                        <input type="radio" name="appliances" value="Black.">
                         Black
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="appliances" value="white">
+                        <input type="radio" name="appliances" value="White.">
                         White
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="appliances" value="mixed">
+                        <input type="radio" name="appliances" value="Mixed.">
                         Mixed finishes
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="appliances" value="otherappliances">
+                        <input type="radio" name="appliances" value="Other.">
                         Other 
                     </label>
                 </div>
@@ -542,7 +544,7 @@
                 <div class="formbold-radio-flex">
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="Fixer Upper" required>
+                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="Fixer Upper." required>
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/brCF6WZs/Fixer-Upper.avif" alt="Fixer Upper">
                                 <div style="margin-left: 10px;">
@@ -554,7 +556,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="Dated">
+                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="Dated.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/25hMz0KK/Dated.avif" alt="Dated">
                                 <div style="margin-left: 10px;">
@@ -566,7 +568,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="Standard">
+                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="Standard.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/rwWQWKNd/Standard.avif" alt="Standard">
                                 <div style="margin-left: 10px;">
@@ -578,7 +580,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="High End">
+                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="High End.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/8zrnHyNz/High-End.avif" alt="High End">
                                 <div style="margin-left: 10px;">
@@ -590,7 +592,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="Luxury">
+                            <input class="formbold-input-radio" type="radio" name="kitchenCondition" value="Luxury.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/XJnHn4Fr/Luxury.avif" alt="Luxury">
                                 <div style="margin-left: 10px;">
@@ -609,7 +611,7 @@
                 <div class="formbold-radio-flex">
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="Fixer Upper" required>
+                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="Fixer Upper." required>
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/KcJVvk0x/Fixer-Upper-b.avif" alt="Fixer Upper">
                                 <div style="margin-left: 10px;">
@@ -621,7 +623,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="Dated">
+                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="Dated.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/50JGjwcN/Dated-b.avif" alt="Dated">
                                 <div style="margin-left: 10px;">
@@ -633,7 +635,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="Standard">
+                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="Standard.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/Xvbxg4ss/Standard-b.avif" alt="Standard">
                                 <div style="margin-left: 10px;">
@@ -645,7 +647,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="High End">
+                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="High End.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/rpXZYSw-C/High-End-b.avif" alt="High End">
                                 <div style="margin-left: 10px;">
@@ -657,7 +659,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="Luxury">
+                            <input class="formbold-input-radio" type="radio" name="bathroomCondition" value="Luxury.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/C5QmC828/Luxury-b.avif" alt="Luxury">
                                 <div style="margin-left: 10px;">
@@ -676,7 +678,7 @@
                 <div class="formbold-radio-flex">
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="Fixer Upper" required>
+                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="Fixer Upper." required>
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/5NrR8ccr/Fixer-Upper-l.avif" alt="Fixer Upper">
                                 <div style="margin-left: 10px;">
@@ -688,7 +690,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="Dated">
+                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="Dated.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/PxM7DPhb/Dated-l.avif" alt="Dated">
                                 <div style="margin-left: 10px;">
@@ -700,7 +702,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="Standard">
+                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="Standard.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/nzVk6Tb7/Standard-l.avif" alt="Standard">
                                 <div style="margin-left: 10px;">
@@ -712,7 +714,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="High End">
+                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="High End.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/W4GYRhDR/High-End-l.avif" alt="High End">
                                 <div style="margin-left: 10px;">
@@ -724,7 +726,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="Luxury">
+                            <input class="formbold-input-radio" type="radio" name="livingCondition" value="Luxury.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/VLJ7f7SW-/Luxury-l.avif" alt="Luxury">
                                 <div style="margin-left: 10px;">
@@ -743,7 +745,7 @@
                 <div class="formbold-radio-flex">
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="Fixer Upper" required>
+                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="Fixer Upper." required>
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/m2kncLnM/Fixer-Upper-e.avif" alt="Fixer Upper">
                                 <div style="margin-left: 10px;">
@@ -755,7 +757,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="Dated">
+                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="Dated.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/6q5mft5k/Dated-e.avif" alt="Dated">
                                 <div style="margin-left: 10px;">
@@ -767,7 +769,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="Standard">
+                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="Standard.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/CKs7PXtS/Standard-e.avif" alt="Standard">
                                 <div style="margin-left: 10px;">
@@ -779,7 +781,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="High End">
+                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="High End.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/9M1xMKtJ/High-End-e.avif" alt="High End">
                                 <div style="margin-left: 10px;">
@@ -791,7 +793,7 @@
                     </div>
                     <div class="formbold-radio-group">
                         <label class="formbold-radio-label">
-                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="Luxury">
+                            <input class="formbold-input-radio" type="radio" name="exteriorCondition" value="Luxury.">
                             <div class="option-content">
                                 <img class="formbold-radio-img" src="https://i.postimg.cc/WpWWPR44/Luxury-e.avif" alt="Luxury">
                                 <div style="margin-left: 10px;">
@@ -916,7 +918,7 @@
     </main>
 
     <footer>
-        F U N D I N G  S P R E E  2 0 2 5 ©
+        FUNDING SPREE 2025 ©
     </footer>
 
     <script>
