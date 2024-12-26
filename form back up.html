@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funding Spree</title>
+    <!-- Add Mapbox Assembly CSS -->
+    <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet">
+    <!-- Add Mapbox Search JS -->
+    <script id="search-js" defer="" src="https://api.mapbox.com/search-js/v1.0.0-beta.24/web.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Raleway+Dots&family=Syncopate:wght@400;700&display=swap');
+        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Add specific styles for the Mapbox autofill input */
+        mapbox-address-autofill {
+            width: 100%;
+            display: block;
+            margin-top: 1rem;
+        }
+
+        mapbox-address-autofill input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+        }
+
+        /* Header styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 0.6rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 2400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 70px; /* Set logo height */
+            width: auto; /* Maintain aspect ratio */
+            align-items: left;
+        }
+
+        .phone {
+            color: #1a365d;
+            font-weight: 600;
+        }
+
+        /* Main content styles */
+        .main-content {
+            max-width: 600px;
+            margin: 7rem auto 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .question-slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .question-slide.active {
+            display: block;
+            opacity: 1;
+        }
+
+        h1 {
+            color: #2b6cb0;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.7rem;
+            font-weight: 300;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .radio-option:hover {
+            background-color: #f7fafc;
+        }
+
+        input[type="radio"] {
+            margin-right: 1rem;
+        }
+
+        input[type="text"], input[type="tel"], input[type="email"] {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            width: calc(100% - 2rem);
+            margin-top: 1rem;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .button {
+            border-radius: 12px;
+            padding: 0.5rem 2rem;
+            background-color: #478ac9;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .button:hover:not(:disabled) {
+            background-color: #3182ce;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: #e2e8f0;
+            margin-bottom: 2rem;
+            border-radius: 2px;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #478ac9;
+            border-radius: 2px;
+            transition: width 0.3s ease-in-out;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #333333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+             font-family: "Syncopate", serif;
+             letter-spacing: 3px;
+             text-shadow: 2px 2px 8px #adadad;
+             font-size: 12px;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        /* Styles for the form */
+        .formbold-select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 10px;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .formbold-btn {
+            text-align: center;
+            width: 100%;
+            font-size: 18px;
+            border-radius: 30px;
+            padding: 14px 25px;
+            background-color: #478ac9;
+            color: white;
+            cursor: pointer;
+            margin-top: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .formbold-btn:disabled {
+            background-color: #d3d3d3;
+            border-color: #d3d3d3;
+            color: #a0a0a0;
+            cursor: not-allowed;
+        }
+
+        .formbold-btn:hover:not(:disabled) {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .formbold-radio-flex {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .formbold-radio-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .formbold-radio-img {
+            width: 150px;
+            height: 100px;
+            margin-right: 10px;
+            border-radius: 10px;
+        }
+
+        .option-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .option-content h4 {
+            margin: 0;
+        }
+
+        /* Checkbox Styles */
+        .formbold-checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+
+        .formbold-checkbox-label {
+            cursor: pointer;
+        }
+
+        .formbold-input-checkbox {
+            margin-right: 0.5rem;
+        }
+
+
+
+        /* Property Form Styles */
+.property-type-card {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+
+.property-type-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+}
+
+.property-image {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.property-info {
+    flex: 1;
+    padding: 15px;
+}
+
+.property-title {
+    font-size: 1.25rem;
+    color: #1a365d;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.property-description {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.radio-input {
+    opacity: 0;
+    position: absolute;
+}
+
+.radio-custom {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #478ac9;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    background: white;
+    margin-left: 10px;
+}
+
+/* Style the radio button when checked */
+.radio-input:checked + .radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background-color: #478ac9;
+    border-radius: 50%;
+}
+
+/* Style the card when selected */
+.property-type-card:has(.radio-input:checked) {
+    border: 2px solid #478ac9;
+    background-color: #f0f7ff;
+}
+
+
+@media (max-width: 768px) {
+    .property-type-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .property-image {
+        width: 100%;
+        height: 200px;
+    }
+
+    .radio-container {
+        margin-top: 16px;
+    }
+
+    .property-description {
+        text-align: center;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="./index.html" class="logo">
+                <img src="https://i.postimg.cc/0jgytB18/fundingspreelogo.jpg" alt="Funding Spree Logo"/>
+            </a>
+            <span class="phone">✆ 405-215-1212</span>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <form id="questionForm" name="house-evaluation" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/final.html">
+
+             <input type="hidden" name="form-name" value="house-evaluation" />
+             <input type="hidden" name="bot-field" />
+
+            <!-- Question 1 updated with Mapbox autofill -->
+    <div class="question-slide active" data-question="1">
+        <h1>Let's start your offer.</h1>
+        <p>Enter your address to get started. This helps us find sales data for your home and other homes nearby.</p>
+        <mapbox-address-autofill>
+            <input class="input mb12" name="address" id="addressInput" autocomplete="house address-line" placeholder="Enter your address" oninput="checkAddress()" required>
+        </mapbox-address-autofill>
+    </div>
+
+            <!-- Question 2 -->
+            <div class="question-slide" data-question="2">
+                <h1>What is your relationship to this home?</h1>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="relationship" value="Owner of the house." required>
+                        I am the owner of this home
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="relationship" value="Realtor or agent.">
+                        I am a realtor or agent
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="relationship" value="Homeowner and an agent.">
+                        I am both the homeowner and an agent
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="relationship" value="Other.">
+                        Other
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 3 (Info Slide) -->
+            <div class="question-slide" data-question="3">
+                <h1>Looking good! Now, let's learn more about your home.</h1>
+                <p>This helps us understand how to price your home.</p>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-slide" data-question="4">
+                <h1>When are you likely to sell your home?</h1>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="timeframe" value="Immediate." required>
+                        Within the next month
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="timeframe" value="1-3months.">
+                        Within 1-3 months
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="timeframe" value="3-6months.">
+                        Within 3-6 months
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="timeframe" value="More than 6 months.">
+                        More than 6 months
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="timeframe" value="Browsing.">
+                        I'm just browsing
+                    </label>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-slide" data-question="5">
+                <h1>Do these home details look right to you?</h1>
+                <div class="formbold-main-wrapper">
+                    <div class="formbold-form-wrapper">
+                        <div class="formbold-mb-5">
+                            <label for="bedrooms">Bedrooms:</label>
+                            <select id="bedrooms" name="bedrooms" class="formbold-select" onchange="checkSelection()">
+                                <option value="" disabled selected>Select your option</option>
+                                <option value="1 bedrooms.">1</option>
+                                <option value="2 bedrooms.">2</option>
+                                <option value="3 bedrooms.">3</option>
+                                <option value="4 bedrooms.">4</option>
+                                <option value="5 bedrooms.">5</option>
+                                <option value="6 bedrooms.">6</option>
+                                <option value="7 bedrooms.">7</option>
+                                <option value="8 bedrooms.">8</option>
+                                <option value="9 bedrooms.">9</option>
+                                <option value="10 bedrooms.">10</option>
+                            </select>
+                           <p style="font-size:14px; color: #818181;">Must have a door, closet, and window.</p>
+                            <br>
+                        </div>
+
+                        <div class="formbold-mb-5">
+                            <label for="fullBathrooms">Full bathrooms:</label>
+                            <select id="fullBathrooms" name="fullBathrooms" class="formbold-select" onchange="checkSelection()">
+                                <option value="" disabled selected>Select your option</option>
+                                <option value="1 bathrooms.">1</option>
+                                <option value="2 bathrooms.">2</option>
+                                <option value="3 bathrooms.">3</option>
+                                <option value="4 bathrooms.">4</option>
+                                <option value="5 bathrooms.">5</option>
+                                <option value="6 bathrooms.">6</option>
+                                <option value="7 bathrooms.">7</option>
+                                <option value="8 bathrooms.">8</option>
+                                <option value="9 bathrooms.">9</option>
+                                <option value="10 bathrooms.">10</option>
+                            </select>
+                            <p style="font-size:14px; color: #818181;">Must have a toilet and a shower/tub.</p>
+                            <br>
+                        </div>
+
+                        <div class="formbold-mb-5">
+                            <label for="partialBathrooms">Partial bathrooms:</label>
+                            <select id="partialBathrooms" name="partialBathrooms" class="formbold-select" onchange="checkSelection()">
+                                <option value="" disabled selected>Select your option</option>
+                                <option value="0 partial bathrooms.">0</option>
+                                <option value="1 partial bathrooms.">1</option>
+                                <option value="2 Partial bathrooms.">2</option>
+                                <option value="3 Partial bathrooms.">3</option>
+                                <option value="4 Partial bathrooms.">4</option>
+                                <option value="5 Partial bathrooms.">5</option>
+                                <option value="6 Partial bathrooms.">6</option>
+                                <option value="7 Partial bathrooms.">7</option>
+                                <option value="8 Partial bathrooms.">8</option>
+                                <option value="9 Partial bathrooms.">9</option>
+                                <option value="10 Partial bathrooms.">10</option>
+                            </select>
+                            <p style="font-size:14px; color: #818181;">Must have a toilet and sink.</p>
+                            <br>
+                        </div>
+
+                        <div class="formbold-mb-5">
+                            <label for="squareFootage">Square footage (above ground):</label>
+                            <input type="text" id="squareFootage" name="squareFootage" class="formbold-input" placeholder="0ft²" onchange="checkSelection()">
+                            <p style="font-size:14px; color: #818181;">Don’t include basements, non-permitted additions, or non-heated square footage.</p>
+                            <br>
+                        </div>
+
+                        <div class="formbold-mb-5">
+                            <label for="floors">Floors (above ground):</label>
+                            <select id="floors" name="floors" class="formbold-select" onchange="checkSelection()">
+                                <option value="" disabled selected>Select your option</option>
+                                <option value="1 floors">1</option>
+                                <option value="2 floors">2</option>
+                                <option value="3 floors">3</option>
+                                <option value="4 floors">4</option>
+                            </select>
+                            <p style="font-size:14px; color: #818181;">Don't include the basement.</p>
+                            <br>
+                        </div>
+
+                        <div class="formbold-mb-5">
+                            <label for="basement">Basement:</label>
+                            <select id="basement" name="basement" class="formbold-select" onchange="checkSelection()">
+                                <option value="" disabled selected>Select your option</option>
+                                <option value="Yes.">Yes</option>
+                                <option value="No.">No</option>
+                            </select>
+                            <p style="font-size:14px; color: #818181;">Floors that are completely below ground.</p>
+                            <br>
+                        </div>
+
+                        <div class="formbold-mb-5">
+                            <label for="yearBuilt">Year built:</label>
+                            <input type="text" id="yearBuilt" name="yearBuilt" class="formbold-input" placeholder="E.g. 1994" onchange="checkSelection()">
+                        </div>
+                        <br>
+                        <div class="formbold-mb-5">
+                            <label for="pool">Pool:</label>
+                            <select id="pool" name="pool" class="formbold-select" onchange="checkSelection()">
+                                <option value="" disabled selected>Select your option</option>
+                                <option value="No pool.">No pool</option>
+                                <option value="Above-ground.">Above-ground</option>
+                                <option value="In-ground.">In-ground</option>
+                                <option value="Community pool.">Community pool</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="formbold-mb-5">
+                            <label for="coveredParking">Covered parking:</label>
+                            <select id="coveredParking" name="coveredParking" class="formbold-select" onchange="checkSelection()">
+                                <option value="" disabled selected>Select your option</option>
+                                <option value="Garage.">Garage</option>
+                                <option value="Carport.">Carport</option>
+                                <option value="Both.">Both</option>
+                                <option value="None.">None</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="formbold-mb-5">
+                            <label for="garageSpaces">Garage spaces:</label>
+                            <select id="garageSpaces" name="garageSpaces" class="formbold-select" onchange="checkSelection()">
+                                <option value="" disabled selected>Select your option</option>
+                                <option value="1.">1</option>
+                                <option value="2.">2</option>
+                                <option value="3.">3</option>
+                                <option value="4.">4</option>
+                                <option value="5.">5</option>
+                                <option value="Doesnotapply">Does not apply</option>
+                            </select>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-slide" data-question="6">
+                <h1>What kind of countertops does your kitchen have?</h1>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="countertops" value="Laminate / Formica." required>
+                        Laminate / Formica
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="countertops" value="Corian.">
+                        Corian
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="countertops" value="Solid stone slab.">
+                        Solid stone slab
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="countertops" value="Granite tile.">
+                        Granite tile
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="countertops" value="Other tile.">
+                        Other tile
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Question 7 -->
+            <div class="question-slide" data-question="7">
+                <h1>How would you describe your kitchen appliances?</h1>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="appliances" value="Stainless." required>
+                        Stainless appliances
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="appliances" value="Black.">
+                        Black
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="appliances" value="White.">
+                        White
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="appliances" value="Mixed.">
+                        Mixed finishes
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="appliances" value="Other.">
+                        Other 
+                    </label>
+                </div>
+            </div>
+
+             
+<!-- Question 8 -->
+<div class="question-slide" data-question="8">
+    <h1>How would you rate the condition of your kitchen?</h1>
+    <br>
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/brCF6WZs/Fixer-Upper.avif" alt="Fixer Upper Kitchen" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Fixer Upper</h3>
+            <p class="property-description">Kitchen needs significant repairs.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="kitchenCondition" value="Fixer Upper." required>
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/25hMz0KK/Dated.avif"  alt="Dated Kitchen" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Dated</h3>
+            <p class="property-description">Kitchen hasn't been updated recently.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="kitchenCondition" value="Dated.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/rwWQWKNd/Standard.avif" alt="Standard Kitchen" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Standard</h3>
+            <p class="property-description">Kitchen is updated with common finishes.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="kitchenCondition" value="Standard.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/8zrnHyNz/High-End.avif" alt="High End Kitchen" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">High End</h3>
+            <p class="property-description">Kitchen has high-quality upgrades.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="kitchenCondition" value="High End.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/XJnHn4Fr/Luxury.avif" alt="Luxury Kitchen" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Luxury</h3>
+            <p class="property-description">itchen has elegant, top-tier finishes.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="kitchenCondition" value="Luxury.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+</div>
+
+<!-- Question 9 -->
+<div class="question-slide" data-question="9">
+    <h1>How would you describe your main bathroom?</h1>
+    <br>
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/KcJVvk0x/Fixer-Upper-b.avif" alt="Fixer Upper Bathroom" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Fixer Upper</h3>
+            <p class="property-description">Bathroom needs significant repairs.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="bathroomCondition" value="Fixer Upper." required>
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/50JGjwcN/Dated-b.avif" alt="Dated Bathroom" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Dated</h3>
+            <p class="property-description">Bathroom hasn't been updated recently.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="bathroomCondition" value="Dated.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/Xvbxg4ss/Standard-b.avif" alt="Standard Bathroom" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Standard</h3>
+            <p class="property-description">Bathroom is updated with common finishes.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="bathroomCondition" value="Standard.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/rpXZYSw-C/High-End-b.avif" alt="High End Bathroom" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">High End</h3>
+            <p class="property-description">Bathroom has high-quality upgrades.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="bathroomCondition" value="High End.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/C5QmC828/Luxury-b.avif" alt="Luxury Bathroom" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Luxury</h3>
+            <p class="property-description">Bathroom has elegant, top-tier finishes.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="bathroomCondition" value="Luxury.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+</div>
+
+<!-- Question 10 -->
+<div class="question-slide" data-question="10">
+    <h1>How would you describe your living room?</h1>
+    <br>
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/5NrR8ccr/Fixer-Upper-l.avif" alt="Fixer Upper Living Room" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Fixer Upper</h3>
+            <p class="property-description">Living needs significant repairs.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="livingCondition" value="Fixer Upper." required>
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/PxM7DPhb/Dated-l.avif" alt="Dated Living Room" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Dated</h3>
+            <p class="property-description">Living hasn't been updated recently.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="livingCondition" value="Dated.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/nzVk6Tb7/Standard-l.avif" alt="Standard Living Room" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Standard</h3>
+            <p class="property-description">Living is updated with common finishes.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="livingCondition" value="Standard.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/W4GYRhDR/High-End-l.avif" alt="High End Living Room" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">High End</h3>
+            <p class="property-description">Living has high-quality upgrades.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="livingCondition" value="High End.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/VLJ7f7SW-/Luxury-l.avif" alt="Luxury Living Room" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Luxury</h3>
+            <p class="property-description">Living has elegant, top-tier finishes.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="livingCondition" value="Luxury.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+</div>
+
+<!-- Question 11 -->
+<div class="question-slide" data-question="11">
+    <h1>How would you describe your home exterior?</h1>
+    <br>
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/m2kncLnM/Fixer-Upper-e.avif" alt="Fixer Upper Exterior" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Fixer Upper</h3>
+            <p class="property-description">Exterior needs significant repairs.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="exteriorCondition" value="Fixer Upper." required>
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/6q5mft5k/Dated-e.avif" alt="Dated Exterior" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Dated</h3>
+            <p class="property-description">Exterior hasn't been updated recently.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="exteriorCondition" value="Dated.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/CKs7PXtS/Standard-e.avif" alt="Standard Exterior" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Standard</h3>
+            <p class="property-description">Exterior is updated with common finishes.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="exteriorCondition" value="Standard.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/9M1xMKtJ/High-End-e.avif" alt="High End Exterior" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">High End</h3>
+            <p class="property-description">Exterior has high-quality upgrades.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="exteriorCondition" value="High End.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+
+    <div class="property-type-card">
+        <img src="https://i.postimg.cc/WpWWPR44/Luxury-e.avif" alt="Luxury Exterior" class="property-image">
+        <div class="property-info">
+            <h3 class="property-title">Luxury</h3>
+            <p class="property-description">Exterior has elegant, top-tier finishes.</p>
+        </div>
+        <label class="radio-container">
+            <input class="radio-input" type="radio" name="exteriorCondition" value="Luxury.">
+            <span class="radio-custom"></span>
+        </label>
+    </div>
+</div>
+
+            <!-- Question 12 -->
+            <div class="question-slide" data-question="12">
+                <h1>Do any of these apply to your home?</h1>
+                <p>This helps us determine whether we can make an offer for your home. You can choose a few.</p>
+                <br>
+                <div class="formbold-radio-flex">
+                    <div class="formbold-checkbox-group">
+                        <label class="formbold-checkbox-label">
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation1" value="financial" onchange="checkCheckboxSelection()" />
+                            Leased or financed solar panels
+                        </label>
+                    </div>
+
+                    <div class="formbold-checkbox-group">
+                        <label class="formbold-checkbox-label">
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation2" value="relocation" onchange="checkCheckboxSelection()" />
+                            Known foundation issues (Excessive cracking, uneven floors)
+                        </label>
+                    </div>
+
+                    <div class="formbold-checkbox-group">
+                        <label class="formbold-checkbox-label">
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation3" value="size" onchange="checkCheckboxSelection()" />
+                            Fire damage
+                        </label>
+                    </div>
+
+                    <div class="formbold-checkbox-group">
+                        <label class="formbold-checkbox-label">
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation4" value="lifestyle" onchange="checkCheckboxSelection()" />
+                            Well water (You maintain a well to supply water)
+                        </label>
+                    </div>
+
+                    <div class="formbold-checkbox-group">
+                        <label class="formbold-checkbox-label">
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation5" value="septic" onchange="checkCheckboxSelection()" />
+                            Septic system (Separate from municipal sewage)
+                        </label>
+                    </div>
+
+                    <div class="formbold-checkbox-group">
+                        <label class="formbold-checkbox-label">
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation6" value="asbestos" onchange="checkCheckboxSelection()" />
+                            Asbestos siding
+                        </label>
+                    </div>
+
+                    <div class="formbold-checkbox-group">
+                        <label class="formbold-checkbox-label">
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation7" value="horse" onchange="checkCheckboxSelection()" />
+                            Horse property (Livestock live on property)
+                        </label>
+                    </div>
+
+                    <div class="formbold-checkbox-group">
+                        <label class="formbold-checkbox-label">
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation8" value="mobile" onchange="checkCheckboxSelection()" />
+                            Mobile or manufactured home
+                        </label>
+                    </div>
+
+                    <div class="formbold-checkbox-group">
+                        <label class="formbold-checkbox-label">
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation9" value="none" onchange="checkCheckboxSelection()" />
+                            None of the above
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-slide" data-question="13">
+    <h1>You're all set! Your offer is ready to go.</h1>
+    <p>Add your info so we know who it's for.</p>
+    <br>
+    
+    <div class="formbold-main-wrapper">
+        <div class="formbold-form-wrapper">
+            <div class="formbold-mb-5">
+                <label for="name">Full name:</label>
+                <input type="text" name="name" id="name" placeholder="Any Name" class="formbold-input" required />
+            </div>
+
+            <br>
+            <br>
+
+            <div class="formbold-mb-5">
+                <label for="phone">Phone number:</label>
+                <input type="tel" name="phone" id="phone" placeholder="000-000-0000" class="formbold-input" required />
+            </div>
+
+            <br>
+            <br>
+
+            <div class="formbold-mb-5">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email address" class="formbold-input" required />
+            </div>
+        </div>
+    </div>
+</div>
+
+            <div class="buttons">
+                <button type="button" id="prevButton" class="button" style="display: none;">Previous</button>
+                <button type="button" id="nextQuestionButton" class="button" disabled>Next</button>
+                <button type="submit" id="submitButton" class="button" style="display: none;">Submit</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        FUNDING SPREE 2025 ©
+    </footer>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 13; // Updated to include the new question
+
+        function updateProgress() {
+            const progress = ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
+            document.getElementById('progress').style.width = `${progress}%`;
+        }
+
+        function showQuestion(questionNumber) {
+            document.querySelectorAll('.question-slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            const currentSlide = document.querySelector(`.question-slide[data-question="${questionNumber}"]`);
+            currentSlide.classList.add('active');
+
+            document.getElementById('prevButton').style.display = questionNumber === 1 ? 'none' : 'block';
+            document.getElementById('nextQuestionButton').style.display = questionNumber === totalQuestions ? 'none' : 'block';
+            document.getElementById('submitButton').style.display = questionNumber === totalQuestions ? 'block' : 'none';
+
+            updateProgress();
+            checkQuestionAnswered(questionNumber);
+        }
+
+        function checkQuestionAnswered(questionNumber) {
+            if (questionNumber === 1) {
+                const addressInput = document.getElementById('addressInput').value;
+                const nextButton = document.getElementById('nextQuestionButton');
+                const isValidAddress = /^\d+\s[A-z]+\s[A-z]+/.test(addressInput);
+                nextButton.disabled = !isValidAddress;
+            } else if (questionNumber === 5) {
+                // Enable next button if all form fields in Question 5 are filled
+                const isAllSelected = Array.from(document.querySelectorAll('.formbold-select'))
+                    .every(select => select.value);
+                const nextButton = document.getElementById('nextQuestionButton');
+                nextButton.disabled = !isAllSelected;
+            } else if (questionNumber === 3) {
+                // Automatically enable the next button for the informational slide
+                document.getElementById('nextQuestionButton').disabled = false;
+            } else if (questionNumber === 12) {
+                // Check if at least one checkbox is selected in Question 12
+                const checkboxes = document.querySelectorAll('input[name="motivations[]"]:checked');
+                const nextButton = document.getElementById('nextQuestionButton');
+                nextButton.disabled = checkboxes.length === 0; // Disable the next button if none are checked
+            } else if (questionNumber === 13) {
+                // Allow the next button regardless of input
+                const nextButton = document.getElementById('nextQuestionButton');
+                nextButton.disabled = false; // Enable the next button without restrictions
+            } else {
+                const currentSlide = document.querySelector(`.question-slide[data-question="${questionNumber}"]`);
+                const radioButtons = currentSlide.querySelectorAll('input[type="radio"]');
+                const isAnswered = Array.from(radioButtons).some(radio => radio.checked);
+                const nextButton = document.getElementById('nextQuestionButton');
+                nextButton.disabled = !isAnswered;
+            }
+        }
+
+        // Add Mapbox initialization
+        const ACCESS_TOKEN = 'pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA';
+        window.addEventListener('load', () => {
+            const elements = document.querySelectorAll('mapbox-address-autofill');
+            for (const autofill of elements) {
+                autofill.accessToken = ACCESS_TOKEN;
+            }
+        });
+
+        // Update the checkAddress function to work with Mapbox
+        function checkAddress() {
+            const addressInput = document.getElementById('addressInput').value;
+            const nextButton = document.getElementById('nextQuestionButton');
+            // Updated regex to be more flexible with address formats
+            const isValidAddress = addressInput.length > 5; // Simplified validation
+            nextButton.disabled = !isValidAddress;
+        }
+
+        // Event Listeners
+        document.getElementById('prevButton').addEventListener('click', () => {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        document.getElementById('nextQuestionButton').addEventListener('click', () => {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        // Add change event listeners to all radio buttons
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                checkQuestionAnswered(currentQuestion);
+            });
+        });
+
+        // Add change event listeners to all checkboxes in Question 12
+        document.querySelectorAll('input[name="motivations[]"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                checkQuestionAnswered(12); // Check if the next button should be enabled
+            });
+        });
+
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', () => {
+            showQuestion(1);
+            updateProgress();
+        });
+
+        // Check address input validity on input
+        function checkAddress() {
+            const addressInput = document.getElementById('addressInput').value;
+            const nextButton = document.getElementById('nextQuestionButton');
+            const isValidAddress = /^\d+\s[A-z]+\s[A-z]+/.test(addressInput);
+            nextButton.disabled = !isValidAddress;
+        }
+
+        // Validate selections for Question 5
+        function checkSelection() {
+            const nextButton = document.getElementById('nextQuestionButton');
+            const bedroomsElement = document.getElementById('bedrooms');
+            const fullBathroomsElement = document.getElementById('fullBathrooms');
+            const partialBathroomsElement = document.getElementById('partialBathrooms');
+            const squareFootageElement = document.getElementById('squareFootage');
+            const floorsElement = document.getElementById('floors');
+
+            const isEnabled = bedroomsElement.value && fullBathroomsElement.value &&
+                partialBathroomsElement.value && squareFootageElement.value && floorsElement.value;
+
+            nextButton.disabled = !isEnabled; 
+        }
+
+        // Add this event listener instead
+document.getElementById('questionForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target;
+    fetch('/', {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form)).toString()
+    })
+    .then(() => {
+        window.location.href = '/final.html';
+    })
+    .catch((error) => console.log('Form submission error:', error));
+});
+</script>
+</body>
+</html>
