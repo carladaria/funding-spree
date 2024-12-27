@@ -420,13 +420,23 @@
              <input type="hidden" name="bot-field" />
 
             <!-- Question 1 updated with Mapbox autofill -->
-    <div class="question-slide active" data-question="1">
-        <h1>Let's start your offer.</h1>
-        <p>Enter your address to get started. This helps us find sales data for your home and other homes nearby.</p>
-        <mapbox-address-autofill>
-            <input class="input mb12" name="address" id="addressInput" autocomplete="house address-line" placeholder="Enter your address" oninput="checkAddress()" required>
-        </mapbox-address-autofill>
-    </div>
+       <div class="question-slide active" data-question="1">
+                <h1>Let's start your offer.</h1>
+                <p>Enter your address to get started. This helps us find sales data for your home and other homes nearby.</p>
+                <mapbox-address-autofill access-token="pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA">
+                    <input 
+                        type="text" 
+                        name="full_address" 
+                        id="addressInput" 
+                        class="input mb12" 
+                        placeholder="Enter your address" 
+                        required 
+                        autocomplete="street-address"
+                        oninput="checkAddress()"
+                    />
+                </mapbox-address-autofill>
+                <input type="hidden" name="formatted_address" id="formattedAddress" />
+            </div>
 
             <!-- Question 2 -->
             <div class="question-slide" data-question="2">
@@ -733,7 +743,7 @@
         <img src="https://i.postimg.cc/XJnHn4Fr/Luxury.avif" alt="Luxury Kitchen" class="property-image">
         <div class="property-info">
             <h3 class="property-title">Luxury</h3>
-            <p class="property-description">itchen has elegant, top-tier finishes.</p>
+            <p class="property-description">Kitchen has elegant, top-tier finishes.</p>
         </div>
         <label class="radio-container">
             <input class="radio-input" type="radio" name="kitchenCondition" value="Luxury.">
@@ -1052,9 +1062,32 @@
         FUNDING SPREE 2025 ©
     </footer>
 
-    <script>
+  <script>
         let currentQuestion = 1;
-        const totalQuestions = 13; // Updated to include the new question
+        const totalQuestions = 13;
+
+        // Initialize Mapbox
+        const ACCESS_TOKEN = 'pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA';
+        
+        window.addEventListener('load', () => {
+            const elements = document.querySelectorAll('mapbox-address-autofill');
+            for (const autofill of elements) {
+                autofill.accessToken = ACCESS_TOKEN;
+                
+                // Add event listener for address selection
+                autofill.addEventListener('retrieve', (event) => {
+                    const address = event.detail;
+                    const formattedAddress = `${address.feature.properties.address}, ${address.feature.properties.context.place}, ${address.feature.properties.context.region}, ${address.feature.properties.context.postcode}`;
+                    
+                    // Update both visible and hidden address fields
+                    document.getElementById('addressInput').value = formattedAddress;
+                    document.getElementById('formattedAddress').value = formattedAddress;
+                    
+                    // Enable the next button
+                    document.getElementById('nextQuestionButton').disabled = false;
+                });
+            }
+        });
 
         function updateProgress() {
             const progress = ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
@@ -1077,30 +1110,38 @@
             checkQuestionAnswered(questionNumber);
         }
 
+        // Modified checkAddress function
+        function checkAddress() {
+            const addressInput = document.getElementById('addressInput').value;
+            const nextButton = document.getElementById('nextQuestionButton');
+            // More comprehensive address validation
+            const isValidAddress = addressInput.length > 10 && /\d+.*\w+.*/.test(addressInput);
+            nextButton.disabled = !isValidAddress;
+            
+            // Update hidden field
+            document.getElementById('formattedAddress').value = addressInput;
+        }
+
         function checkQuestionAnswered(questionNumber) {
             if (questionNumber === 1) {
                 const addressInput = document.getElementById('addressInput').value;
                 const nextButton = document.getElementById('nextQuestionButton');
-                const isValidAddress = /^\d+\s[A-z]+\s[A-z]+/.test(addressInput);
+                const isValidAddress = addressInput.length > 10 && /\d+.*\w+.*/.test(addressInput);
                 nextButton.disabled = !isValidAddress;
             } else if (questionNumber === 5) {
-                // Enable next button if all form fields in Question 5 are filled
                 const isAllSelected = Array.from(document.querySelectorAll('.formbold-select'))
                     .every(select => select.value);
                 const nextButton = document.getElementById('nextQuestionButton');
                 nextButton.disabled = !isAllSelected;
             } else if (questionNumber === 3) {
-                // Automatically enable the next button for the informational slide
                 document.getElementById('nextQuestionButton').disabled = false;
             } else if (questionNumber === 12) {
-                // Check if at least one checkbox is selected in Question 12
                 const checkboxes = document.querySelectorAll('input[name="motivations[]"]:checked');
                 const nextButton = document.getElementById('nextQuestionButton');
-                nextButton.disabled = checkboxes.length === 0; // Disable the next button if none are checked
+                nextButton.disabled = checkboxes.length === 0;
             } else if (questionNumber === 13) {
-                // Allow the next button regardless of input
                 const nextButton = document.getElementById('nextQuestionButton');
-                nextButton.disabled = false; // Enable the next button without restrictions
+                nextButton.disabled = false;
             } else {
                 const currentSlide = document.querySelector(`.question-slide[data-question="${questionNumber}"]`);
                 const radioButtons = currentSlide.querySelectorAll('input[type="radio"]');
@@ -1110,23 +1151,26 @@
             }
         }
 
-        // Add Mapbox initialization
-        const ACCESS_TOKEN = 'pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA';
-        window.addEventListener('load', () => {
-            const elements = document.querySelectorAll('mapbox-address-autofill');
-            for (const autofill of elements) {
-                autofill.accessToken = ACCESS_TOKEN;
-            }
+        // Modified form submission handler
+        document.getElementById('questionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            // Ensure address is included in form data
+            const address = document.getElementById('addressInput').value;
+            formData.set('address', address); // This ensures the address is included in the form submission
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                window.location.href = '/final.html';
+            })
+            .catch((error) => console.log('Form submission error:', error));
         });
-
-        // Update the checkAddress function to work with Mapbox
-        function checkAddress() {
-            const addressInput = document.getElementById('addressInput').value;
-            const nextButton = document.getElementById('nextQuestionButton');
-            // Updated regex to be more flexible with address formats
-            const isValidAddress = addressInput.length > 5; // Simplified validation
-            nextButton.disabled = !isValidAddress;
-        }
 
         // Event Listeners
         document.getElementById('prevButton').addEventListener('click', () => {
@@ -1153,7 +1197,7 @@
         // Add change event listeners to all checkboxes in Question 12
         document.querySelectorAll('input[name="motivations[]"]').forEach(checkbox => {
             checkbox.addEventListener('change', () => {
-                checkQuestionAnswered(12); // Check if the next button should be enabled
+                checkQuestionAnswered(12);
             });
         });
 
@@ -1162,14 +1206,6 @@
             showQuestion(1);
             updateProgress();
         });
-
-        // Check address input validity on input
-        function checkAddress() {
-            const addressInput = document.getElementById('addressInput').value;
-            const nextButton = document.getElementById('nextQuestionButton');
-            const isValidAddress = /^\d+\s[A-z]+\s[A-z]+/.test(addressInput);
-            nextButton.disabled = !isValidAddress;
-        }
 
         // Validate selections for Question 5
         function checkSelection() {
@@ -1185,21 +1221,6 @@
 
             nextButton.disabled = !isEnabled; 
         }
-
-        // Add this event listener instead
-document.getElementById('questionForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const form = e.target;
-    fetch('/', {
-        method: 'POST',
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(new FormData(form)).toString()
-    })
-    .then(() => {
-        window.location.href = '/final.html';
-    })
-    .catch((error) => console.log('Form submission error:', error));
-});
-</script>
+    </script>
 </body>
 </html>
