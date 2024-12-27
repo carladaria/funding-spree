@@ -439,13 +439,13 @@
     </mapbox-address-autofill>
 
     <!-- Hidden fields for address components -->
-    <input type="hidden" name="street_number" id="street_number" />
-    <input type="hidden" name="route" id="route" />
-    <input type="hidden" name="city" id="city" />
-    <input type="hidden" name="state" id="state" />
-    <input type="hidden" name="postal_code" id="postal_code" />
-    <input type="hidden" name="country" id="country" />
-    <input type="hidden" name="formatted_address" id="formattedAddress" />
+   <input type="hidden" name="street_number" id="street_number">
+   <input type="hidden" name="route" id="route">
+   <input type="hidden" name="city" id="city">
+   <input type="hidden" name="state" id="state">
+   <input type="hidden" name="postal_code" id="postal_code">
+   <input type="hidden" name="country" id="country">
+   <input type="hidden" name="formatted_address" id="formattedAddress">
 </div>
             <!-- Question 2 -->
             <div class="question-slide" data-question="2">
@@ -1072,208 +1072,237 @@
     </footer>
 
     <script>
-        let currentQuestion = 1;
-        const totalQuestions = 13;
+    let currentQuestion = 1;
+const totalQuestions = 13;
 
-        // Initialize Mapbox
-        const ACCESS_TOKEN = 'pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA';
+// Initialize Mapbox
+const ACCESS_TOKEN = 'pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA';
+
+window.addEventListener('load', () => {
+    const elements = document.querySelectorAll('mapbox-address-autofill');
+    for (const autofill of elements) {
+        autofill.accessToken = ACCESS_TOKEN;
         
-        window.addEventListener('load', () => {
-            const elements = document.querySelectorAll('mapbox-address-autofill');
-            for (const autofill of elements) {
-                autofill.accessToken = ACCESS_TOKEN;
-                
-                // Enhanced event listener for address selection
-                autofill.addEventListener('retrieve', (event) => {
-                    const address = event.detail;
-                    const feature = address.feature;
-                    const properties = feature.properties;
-                    const context = properties.context;
-                    
-                    // Extract address components
-                    const streetNumber = properties.address_number || '';
-                    const street = properties.street || '';
-                    const city = context.place || '';
-                    const state = context.region || '';
-                    const postalCode = context.postcode || '';
-                    const country = context.country || '';
+        // Enhanced event listener for address selection
+        autofill.addEventListener('retrieve', (event) => {
+            const address = event.detail;
+            
+            // Get the full feature object
+            const feature = address.feature;
+            
+            // Extract address components from feature properties
+            const properties = feature.properties;
+            
+            // Parse address components
+            let streetNumber = '';
+            let streetName = '';
+            let neighborhood = '';
+            let city = '';
+            let state = '';
+            let postalCode = '';
+            let country = '';
 
-                    // Create formatted address
-                    const formattedAddress = [
-                        `${streetNumber} ${street}`.trim(),
-                        city,
-                        state,
-                        postalCode,
-                        country
-                    ].filter(Boolean).join(', ');
+            // Extract street number and name
+            if (properties.address) {
+                const addressParts = properties.address.split(' ');
+                streetNumber = addressParts[0];
+                streetName = addressParts.slice(1).join(' ');
+            }
 
-                    // Update visible input
-                    document.getElementById('addressInput').value = formattedAddress;
-
-                    // Update hidden fields
-                    document.getElementById('street_number').value = streetNumber;
-                    document.getElementById('route').value = street;
-                    document.getElementById('city').value = city;
-                    document.getElementById('state').value = state;
-                    document.getElementById('postal_code').value = postalCode;
-                    document.getElementById('country').value = country;
-                    document.getElementById('formattedAddress').value = formattedAddress;
-
-                    // Enable the next button
-                    document.getElementById('nextQuestionButton').disabled = false;
-                    
-                    // Log the captured data for verification
-                    console.log('Address Components:', {
-                        streetNumber,
-                        street,
-                        city,
-                        state,
-                        postalCode,
-                        country,
-                        formattedAddress
-                    });
-                });
-
-                // Keep the existing input event listener
-                autofill.querySelector('input').addEventListener('input', (e) => {
-                    const value = e.target.value;
-                    document.getElementById('formattedAddress').value = value;
-                    document.getElementById('nextQuestionButton').disabled = value.length < 10;
+            // Extract other components from context
+            if (properties.context) {
+                properties.context.forEach(context => {
+                    if (context.id.startsWith('neighborhood')) {
+                        neighborhood = context.text;
+                    } else if (context.id.startsWith('place')) {
+                        city = context.text;
+                    } else if (context.id.startsWith('region')) {
+                        state = context.text;
+                    } else if (context.id.startsWith('postcode')) {
+                        postalCode = context.text;
+                    } else if (context.id.startsWith('country')) {
+                        country = context.text;
+                    }
                 });
             }
+
+            // Create formatted address
+            const formattedAddress = [
+                `${streetNumber} ${streetName}`.trim(),
+                neighborhood,
+                city,
+                `${state} ${postalCode}`.trim(),
+                country
+            ].filter(Boolean).join(', ');
+
+            // Update all form fields
+            document.getElementById('street_number').value = streetNumber;
+            document.getElementById('route').value = streetName;
+            document.getElementById('city').value = city;
+            document.getElementById('state').value = state;
+            document.getElementById('postal_code').value = postalCode;
+            document.getElementById('country').value = country;
+            document.getElementById('formattedAddress').value = formattedAddress;
+
+            // Update the visible input
+            document.getElementById('addressInput').value = formattedAddress;
+
+            // Enable the next button if we have a valid address
+            document.getElementById('nextQuestionButton').disabled = false;
+
+            // Log the captured data for verification
+            console.log('Address Components:', {
+                streetNumber,
+                streetName,
+                neighborhood,
+                city,
+                state,
+                postalCode,
+                country,
+                formattedAddress,
+                rawFeature: feature
+            });
         });
 
-        function updateProgress() {
-            const progress = ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
-            document.getElementById('progress').style.width = `${progress}%`;
-        }
-
-        function showQuestion(questionNumber) {
-            document.querySelectorAll('.question-slide').forEach(slide => {
-                slide.classList.remove('active');
-            });
-
-            const currentSlide = document.querySelector(`.question-slide[data-question="${questionNumber}"]`);
-            currentSlide.classList.add('active');
-
-            document.getElementById('prevButton').style.display = questionNumber === 1 ? 'none' : 'block';
-            document.getElementById('nextQuestionButton').style.display = questionNumber === totalQuestions ? 'none' : 'block';
-            document.getElementById('submitButton').style.display = questionNumber === totalQuestions ? 'block' : 'none';
-
-            updateProgress();
-            checkQuestionAnswered(questionNumber);
-        }
-
-        // Modified checkAddress function
-        function checkAddress() {
-            const addressInput = document.getElementById('addressInput').value;
+        // Add input validation
+        autofill.querySelector('input').addEventListener('input', (e) => {
+            const value = e.target.value;
             const nextButton = document.getElementById('nextQuestionButton');
-            // More comprehensive address validation
-            const isValidAddress = addressInput.length > 10 && /\d+.*\w+.*/.test(addressInput);
-            nextButton.disabled = !isValidAddress;
             
-            // Update hidden field
-            document.getElementById('formattedAddress').value = addressInput;
-        }
-
-        function checkQuestionAnswered(questionNumber) {
-            if (questionNumber === 1) {
-                const addressInput = document.getElementById('addressInput').value;
-                const nextButton = document.getElementById('nextQuestionButton');
-                const isValidAddress = addressInput.length > 10 && /\d+.*\w+.*/.test(addressInput);
-                nextButton.disabled = !isValidAddress;
-            } else if (questionNumber === 5) {
-                const isAllSelected = Array.from(document.querySelectorAll('.formbold-select'))
-                    .every(select => select.value);
-                const nextButton = document.getElementById('nextQuestionButton');
-                nextButton.disabled = !isAllSelected;
-            } else if (questionNumber === 3) {
-                document.getElementById('nextQuestionButton').disabled = false;
-            } else if (questionNumber === 12) {
-                const checkboxes = document.querySelectorAll('input[name="motivations[]"]:checked');
-                const nextButton = document.getElementById('nextQuestionButton');
-                nextButton.disabled = checkboxes.length === 0;
-            } else if (questionNumber === 13) {
-                const nextButton = document.getElementById('nextQuestionButton');
-                nextButton.disabled = false;
-            } else {
-                const currentSlide = document.querySelector(`.question-slide[data-question="${questionNumber}"]`);
-                const radioButtons = currentSlide.querySelectorAll('input[type="radio"]');
-                const isAnswered = Array.from(radioButtons).some(radio => radio.checked);
-                const nextButton = document.getElementById('nextQuestionButton');
-                nextButton.disabled = !isAnswered;
-            }
-        }
-
-        // Update form submission handler
-        document.getElementById('questionForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
+            // Basic validation for address format
+            const hasNumber = /\d/.test(value);
+            const hasStreet = /[a-zA-Z]/.test(value);
+            const isLongEnough = value.length >= 5;
             
-            // Ensure we get the address from the hidden field
-            const address = document.getElementById('formattedAddress').value;
-            formData.set('formatted_address', address);
+            nextButton.disabled = !(hasNumber && hasStreet && isLongEnough);
             
-            fetch('/', {
-                method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(() => {
-                window.location.href = '/final.html';
-            })
-            .catch((error) => console.log('Form submission error:', error));
+            // Update formatted address
+            document.getElementById('formattedAddress').value = value;
         });
+    }
+});
 
-        // Event Listeners
-        document.getElementById('prevButton').addEventListener('click', () => {
-            if (currentQuestion > 1) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
-            }
-        });
+function updateProgress() {
+    const progress = ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
+    document.getElementById('progress').style.width = `${progress}%`;
+}
 
-        document.getElementById('nextQuestionButton').addEventListener('click', () => {
-            if (currentQuestion < totalQuestions) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
-            }
-        });
+function showQuestion(questionNumber) {
+    document.querySelectorAll('.question-slide').forEach(slide => {
+        slide.classList.remove('active');
+    });
 
-        // Add change event listeners to all radio buttons
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                checkQuestionAnswered(currentQuestion);
-            });
-        });
+    const currentSlide = document.querySelector(`.question-slide[data-question="${questionNumber}"]`);
+    currentSlide.classList.add('active');
 
-        // Add change event listeners to all checkboxes in Question 12
-        document.querySelectorAll('input[name="motivations[]"]').forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                checkQuestionAnswered(12);
-            });
-        });
+    document.getElementById('prevButton').style.display = questionNumber === 1 ? 'none' : 'block';
+    document.getElementById('nextQuestionButton').style.display = questionNumber === totalQuestions ? 'none' : 'block';
+    document.getElementById('submitButton').style.display = questionNumber === totalQuestions ? 'block' : 'none';
 
-        // Initialize the form
-        document.addEventListener('DOMContentLoaded', () => {
-            showQuestion(1);
-            updateProgress();
-        });
+    updateProgress();
+    checkQuestionAnswered(questionNumber);
+}
 
-        // Validate selections for Question 5
-        function checkSelection() {
-            const nextButton = document.getElementById('nextQuestionButton');
-            const bedroomsElement = document.getElementById('bedrooms');
-            const fullBathroomsElement = document.getElementById('fullBathrooms');
-            const partialBathroomsElement = document.getElementById('partialBathrooms');
-            const squareFootageElement = document.getElementById('squareFootage');
-            const floorsElement = document.getElementById('floors');
+function checkAddress() {
+    const addressInput = document.getElementById('addressInput').value;
+    const nextButton = document.getElementById('nextQuestionButton');
+    const isValidAddress = addressInput.length > 10 && /\d+.*\w+.*/.test(addressInput);
+    nextButton.disabled = !isValidAddress;
+    
+    document.getElementById('formattedAddress').value = addressInput;
+}
 
-            const isEnabled = bedroomsElement.value && fullBathroomsElement.value &&
-                partialBathroomsElement.value && squareFootageElement.value && floorsElement.value;
+function checkQuestionAnswered(questionNumber) {
+    if (questionNumber === 1) {
+        const addressInput = document.getElementById('addressInput').value;
+        const nextButton = document.getElementById('nextQuestionButton');
+        const isValidAddress = addressInput.length > 10 && /\d+.*\w+.*/.test(addressInput);
+        nextButton.disabled = !isValidAddress;
+    } else if (questionNumber === 5) {
+        const isAllSelected = Array.from(document.querySelectorAll('.formbold-select'))
+            .every(select => select.value);
+        const nextButton = document.getElementById('nextQuestionButton');
+        nextButton.disabled = !isAllSelected;
+    } else if (questionNumber === 3) {
+        document.getElementById('nextQuestionButton').disabled = false;
+    } else if (questionNumber === 12) {
+        const checkboxes = document.querySelectorAll('input[name="motivations[]"]:checked');
+        const nextButton = document.getElementById('nextQuestionButton');
+        nextButton.disabled = checkboxes.length === 0;
+    } else if (questionNumber === 13) {
+        const nextButton = document.getElementById('nextQuestionButton');
+        nextButton.disabled = false;
+    } else {
+        const currentSlide = document.querySelector(`.question-slide[data-question="${questionNumber}"]`);
+        const radioButtons = currentSlide.querySelectorAll('input[type="radio"]');
+        const isAnswered = Array.from(radioButtons).some(radio => radio.checked);
+        const nextButton = document.getElementById('nextQuestionButton');
+        nextButton.disabled = !isAnswered;
+    }
+}
 
-            nextButton.disabled = !isEnabled; 
-        }
+document.getElementById('questionForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    
+    const address = document.getElementById('formattedAddress').value;
+    formData.set('formatted_address', address);
+    
+    fetch('/', {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString()
+    })
+    .then(() => {
+        window.location.href = '/final.html';
+    })
+    .catch((error) => console.log('Form submission error:', error));
+});
+
+document.getElementById('prevButton').addEventListener('click', () => {
+    if (currentQuestion > 1) {
+        currentQuestion--;
+        showQuestion(currentQuestion);
+    }
+});
+
+document.getElementById('nextQuestionButton').addEventListener('click', () => {
+    if (currentQuestion < totalQuestions) {
+        currentQuestion++;
+        showQuestion(currentQuestion);
+    }
+});
+
+document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        checkQuestionAnswered(currentQuestion);
+    });
+});
+
+document.querySelectorAll('input[name="motivations[]"]').forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+        checkQuestionAnswered(12);
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    showQuestion(1);
+    updateProgress();
+});
+
+function checkSelection() {
+    const nextButton = document.getElementById('nextQuestionButton');
+    const bedroomsElement = document.getElementById('bedrooms');
+    const fullBathroomsElement = document.getElementById('fullBathrooms');
+    const partialBathroomsElement = document.getElementById('partialBathrooms');
+    const squareFootageElement = document.getElementById('squareFootage');
+    const floorsElement = document.getElementById('floors');
+
+    const isEnabled = bedroomsElement.value && fullBathroomsElement.value &&
+        partialBathroomsElement.value && squareFootageElement.value && floorsElement.value;
+
+    nextButton.disabled = !isEnabled; 
+}
     </script>
 </body>
 </html>
