@@ -420,24 +420,23 @@
              <input type="hidden" name="bot-field" />
 
             <!-- Question 1 updated with Mapbox autofill -->
-       <div class="question-slide active" data-question="1">
-                <h1>Let's start your offer.</h1>
-                <p>Enter your address to get started. This helps us find sales data for your home and other homes nearby.</p>
-                <mapbox-address-autofill access-token="pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA">
-                    <input 
-                        type="text" 
-                        name="full_address" 
-                        id="addressInput" 
-                        class="input mb12" 
-                        placeholder="Enter your address" 
-                        required 
-                        autocomplete="street-address"
-                        oninput="checkAddress()"
-                    />
-                </mapbox-address-autofill>
-                <input type="hidden" name="formatted_address" id="formattedAddress" />
-            </div>
 
+       <div class="question-slide active" data-question="1">
+    <h1>Let's start your offer.</h1>
+    <p>Enter your address to get started. This helps us find sales data for your home and other homes nearby.</p>
+    <mapbox-address-autofill access-token="pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA">
+        <input 
+            type="text" 
+            name="full_address" 
+            id="addressInput"
+            class="input mb12" 
+            placeholder="Enter your address" 
+            required 
+            autocomplete="street-address"
+        />
+    </mapbox-address-autofill>
+    <input type="hidden" name="formatted_address" id="formattedAddress" />
+</div>
             <!-- Question 2 -->
             <div class="question-slide" data-question="2">
                 <h1>What is your relationship to this home?</h1>
@@ -955,63 +954,63 @@
                 <div class="formbold-radio-flex">
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation1" value="financial" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation1" value="Leased or financed solar panels" onchange="checkCheckboxSelection()" />
                             Leased or financed solar panels
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation2" value="relocation" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation2" value="Known foundation issues" onchange="checkCheckboxSelection()" />
                             Known foundation issues (Excessive cracking, uneven floors)
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation3" value="size" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation3" value="Fire damage" onchange="checkCheckboxSelection()" />
                             Fire damage
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation4" value="lifestyle" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation4" value="Well water" onchange="checkCheckboxSelection()" />
                             Well water (You maintain a well to supply water)
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation5" value="septic" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation5" value="Septic system" onchange="checkCheckboxSelection()" />
                             Septic system (Separate from municipal sewage)
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation6" value="asbestos" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation6" value="Asbestos siding" onchange="checkCheckboxSelection()" />
                             Asbestos siding
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation7" value="horse" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation7" value="Horse property" onchange="checkCheckboxSelection()" />
                             Horse property (Livestock live on property)
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation8" value="mobile" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation8" value="Mobile or manufactured home" onchange="checkCheckboxSelection()" />
                             Mobile or manufactured home
                         </label>
                     </div>
 
                     <div class="formbold-checkbox-group">
                         <label class="formbold-checkbox-label">
-                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation9" value="none" onchange="checkCheckboxSelection()" />
+                            <input class="formbold-input-checkbox" type="checkbox" name="motivations[]" id="motivation9" value="None" onchange="checkCheckboxSelection()" />
                             None of the above
                         </label>
                     </div>
@@ -1069,25 +1068,39 @@
         // Initialize Mapbox
         const ACCESS_TOKEN = 'pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA';
         
-        window.addEventListener('load', () => {
-            const elements = document.querySelectorAll('mapbox-address-autofill');
-            for (const autofill of elements) {
-                autofill.accessToken = ACCESS_TOKEN;
-                
-                // Add event listener for address selection
-                autofill.addEventListener('retrieve', (event) => {
-                    const address = event.detail;
-                    const formattedAddress = `${address.feature.properties.address}, ${address.feature.properties.context.place}, ${address.feature.properties.context.region}, ${address.feature.properties.context.postcode}`;
-                    
-                    // Update both visible and hidden address fields
-                    document.getElementById('addressInput').value = formattedAddress;
-                    document.getElementById('formattedAddress').value = formattedAddress;
-                    
-                    // Enable the next button
-                    document.getElementById('nextQuestionButton').disabled = false;
-                });
-            }
+       window.addEventListener('load', () => {
+    const elements = document.querySelectorAll('mapbox-address-autofill');
+    for (const autofill of elements) {
+        autofill.accessToken = ACCESS_TOKEN;
+        
+        // Add event listener for address selection
+        autofill.addEventListener('retrieve', (event) => {
+            const address = event.detail;
+            // Create full address string from components
+            const formattedAddress = [
+                address.feature.properties.address,
+                address.feature.properties.context.place,
+                address.feature.properties.context.region,
+                address.feature.properties.context.postcode
+            ].filter(Boolean).join(', ');
+            
+            // Update both visible input and hidden field
+            document.getElementById('addressInput').value = formattedAddress;
+            document.getElementById('formattedAddress').value = formattedAddress;
+            
+            // Enable the next button
+            document.getElementById('nextQuestionButton').disabled = false;
         });
+
+          // Add input event listener for manual address entry
+        autofill.querySelector('input').addEventListener('input', (e) => {
+            const value = e.target.value;
+            document.getElementById('formattedAddress').value = value;
+            // Only enable next button if address is long enough
+            document.getElementById('nextQuestionButton').disabled = value.length < 10;
+        });
+    }
+});
 
         function updateProgress() {
             const progress = ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
@@ -1151,26 +1164,25 @@
             }
         }
 
-        // Modified form submission handler
-        document.getElementById('questionForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const form = e.target;
-            const formData = new FormData(form);
-            
-            // Ensure address is included in form data
-            const address = document.getElementById('addressInput').value;
-            formData.set('address', address); // This ensures the address is included in the form submission
-            
-            fetch('/', {
-                method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(() => {
-                window.location.href = '/final.html';
-            })
-            .catch((error) => console.log('Form submission error:', error));
-        });
+        // Update form submission handler
+document.getElementById('questionForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    
+    // Ensure we get the address from the hidden field
+    const address = document.getElementById('formattedAddress').value;
+    formData.set('formatted_address', address);
+    
+    fetch('/', {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString()
+    })
+    .then(() => {
+        window.location.href = '/final.html';
+    })
+    .catch((error) => console.log('Form submission error:', error));
+});
 
         // Event Listeners
         document.getElementById('prevButton').addEventListener('click', () => {
