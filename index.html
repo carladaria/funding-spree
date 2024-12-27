@@ -7,7 +7,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
-         @import url('https://fonts.googleapis.com/css2?family=Raleway+Dots&family=Syncopate:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Raleway+Dots&family=Syncopate:wght@400;700&display=swap');
 
         * {
             margin: 0;
@@ -19,9 +19,7 @@
         body {
             display: flex;
             flex-direction: column;
-            min-height: 90vh;
             background-color: #FFFFFF;
-
         }
 
         /* Header styles */
@@ -51,8 +49,8 @@
         }
 
         .logo img {
-            height: 70px; /* Set logo height */
-            width: auto; /* Maintain aspect ratio */
+            height: 70px;
+            width: auto;
             align-items: left;
         }
        
@@ -64,7 +62,7 @@
 
         /* Main content styles */
         .main-content {
-            flex: 1;
+            min-height: 100vh;
             padding-top: 100px;
             display: flex;
             justify-content: center;
@@ -104,10 +102,9 @@
             margin-bottom: 10px;
             font-weight: 400;
             text-shadow: 2px 2px 4px rgba(0, 102, 204, 0.2);
-            white-space: nowrap;  /* Prevent wrapping */
-            overflow: hidden;     /* Hide overflow content */
-            text-overflow: ellipsis; /* Add ellipsis if too long */
-
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .subheading {
@@ -133,19 +130,83 @@
             background-color: #3182ce;
         }
 
+        /* Mission section styles */
+        .mission-section {
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #FFFFFF, #aec5e4);
+            padding: 100px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mission-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            text-align: center;
+        }
+
+        .mission-heading {
+            color: #003c6d;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .mission-text {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.2rem;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .mission-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mission-card h3 {
+            color: #003c6d;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .mission-card p {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
         /* Footer styles */
-          footer {
+        footer {
             background-color: #333333;
             color: white;
             text-align: center;
             padding: 1rem;
-            position: fixed;
-            bottom: 0;
             width: 100%;
-             font-family: "Syncopate", serif;
-             letter-spacing: 3px;
-             text-shadow: 2px 2px 8px #adadad;
-             font-size: 12px;
+            font-family: "Syncopate", serif;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 8px #adadad;
+            font-size: 12px;
         }
 
         @media (max-width: 768px) {
@@ -166,13 +227,17 @@
             .subheading {
                 font-size: 1.2rem;
             }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <a href="./index.html"class="logo">
+            <a href="./index.html" class="logo">
                 <img src="https://i.postimg.cc/0jgytB18/fundingspreelogo.jpg" alt="Funding Spree Logo"/>
             </a>
             <a href="tel:405-215-1212" class="phone">✆ 405-215-1212</a>
@@ -192,7 +257,30 @@
         </div>
     </main>
 
-   <footer>
+    <section class="mission-section">
+        <div class="mission-content">
+            <h2 class="mission-heading">Our Mission</h2>
+            <p class="mission-text"> <i>At Funding Spree, we're here to make selling your home quick, easy, and stress-free. 
+            Our goal is to provide a fair and transparent process that works on your schedule, giving you the confidence and peace of mind you deserve. <br>Whether you need to sell fast or just want a hassle-free experience, we're committed to helping you every step of the way. </i></p>
+            
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <h3>Quick Process</h3>
+                    <p>We’re dedicated to simplifying the home selling process for you, save you time and energy with quick and smooth transactions.</p>
+                </div>
+                <div class="mission-card">
+                    <h3>Fair Value</h3>
+                    <p>Our transparent pricing approach ensures you receive a fair offer for your property, backed by thorough market analysis.</p>
+                </div>
+                <div class="mission-card">
+                    <h3>Personal Touch</h3>
+                    <p>We provide personalized service and support throughout the entire process, ensuring your needs are met every step of the way.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
         FUNDING SPREE 2025 ©
     </footer>
 </body>
