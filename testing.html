@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funding Spree</title>
+    <style>
+        body {
+            font-family: Montserrat, sans-serif;
+            font-weight: 900;
+            margin: 0;
+            overflow: hidden;
+            cursor: none; /* Hides the default cursor */
+        }
+
+        /* Styles for the shapes */
+        .shapes {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .shape {
+            will-change: transform;
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(4px); /* Adding blur to the shapes */
+        }
+
+        .shape.shape-1 {
+            background: #1853a4;
+            width: 32px; /* Width of shape-1 */
+            height: 32px; /* Height of shape-1 */
+            margin: -16px 0 0 -16px; /* Centering */
+        }
+
+        .shape.shape-2 {
+            background: #5792e1;
+            width: 22px; /* Width of shape-2 */
+            height: 22px; /* Height of shape-2 */
+            margin: -11px 0 0 -11px; /* Centering */
+        }
+
+        .shape.shape-3 {
+            background: #b3d2fc;
+            width: 12px; /* Width of shape-3 */
+            height: 12px; /* Height of shape-3 */
+            margin: -6px 0 0 -6px; /* Centering */
+        }
+
+        div {
+    cursor:context-menu;}
+
+    </style>
+</head>
+<body>
+    <div class="shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="cursor"></div>
+    </div>
+
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
+    <script>
+        document.body.addEventListener("mousemove", evt => {
+            const mouseX = evt.clientX;
+            const mouseY = evt.clientY;
+
+            // Move the custom cursor
+            gsap.set(".cursor", {
+                x: mouseX,
+                y: mouseY
+            });
+
+            // Move the shapes with a slight delay to create a spotlight effect
+            gsap.to(".shape", {
+                x: mouseX,
+                y: mouseY,
+                stagger: -0.1
+            });
+        });
+    </script>
+</body>
+</html>
