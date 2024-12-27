@@ -74,11 +74,18 @@
             align-items: left;
         }
         
-        .phone {
+         .phone {
             color: #1a365d;
             font-weight: 600;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif; /* Change font to Montserrat */
+            transition: transform 0.3s ease; /* Add transition for the phone number */
         }
 
+        .phone:hover {
+            transform: translateX(-7px) scale(1.2); /* Move left 0.7 cm (7px) and scale */
+        }
+        
         /* Main content styles */
         .main-content {
             max-width: 600px;

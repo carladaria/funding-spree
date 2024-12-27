@@ -58,11 +58,17 @@
             width: auto;
             align-items: left;
         }
-       
+
         .phone {
             color: #1a365d;
             font-weight: 600;
             text-decoration: none;
+            font-family: 'Montserrat', sans-serif; /* Change font to Montserrat */
+            transition: transform 0.3s ease; /* Add transition for the phone number */
+        }
+
+        .phone:hover {
+            transform: translateX(-7px) scale(1.2); /* Move left 0.7 cm (7px) and scale */
         }
 
         /* Main content styles */
@@ -133,7 +139,7 @@
 
         .start-button:hover {
             background-color: #133863; /* Change background color on hover */
-            transform: scale(1.2); /* Scale the button to 1.4 on hover */
+            transform: scale(1.2); /* Scale the button to 1.2 on hover */
         }
 
         /* Mission section styles */
