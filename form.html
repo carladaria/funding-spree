@@ -421,13 +421,15 @@
 
             <!-- Question 1 updated with Mapbox autofill -->
 
-       <div class="question-slide active" data-question="1">
+      <div class="question-slide active" data-question="1">
     <h1>Let's start your offer.</h1>
     <p>Enter your address to get started. This helps us find sales data for your home and other homes nearby.</p>
+    
+    <!-- Main address input with Mapbox autofill -->
     <mapbox-address-autofill access-token="pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA">
         <input 
             type="text" 
-            name="full_address" 
+            name="street_address" 
             id="addressInput"
             class="input mb12" 
             placeholder="Enter your address" 
@@ -435,6 +437,14 @@
             autocomplete="street-address"
         />
     </mapbox-address-autofill>
+
+    <!-- Hidden fields for address components -->
+    <input type="hidden" name="street_number" id="street_number" />
+    <input type="hidden" name="route" id="route" />
+    <input type="hidden" name="city" id="city" />
+    <input type="hidden" name="state" id="state" />
+    <input type="hidden" name="postal_code" id="postal_code" />
+    <input type="hidden" name="country" id="country" />
     <input type="hidden" name="formatted_address" id="formattedAddress" />
 </div>
             <!-- Question 2 -->
@@ -1061,46 +1071,77 @@
         FUNDING SPREE 2025 ©
     </footer>
 
-  <script>
+    <script>
         let currentQuestion = 1;
         const totalQuestions = 13;
 
         // Initialize Mapbox
         const ACCESS_TOKEN = 'pk.eyJ1IjoiY2FybGFkYXJpYSIsImEiOiJjbTU0dnRrb20yd2prMmpxNzk2Y29leHgyIn0.DOIDBQahOZopqgJEx1n6LA';
         
-       window.addEventListener('load', () => {
-    const elements = document.querySelectorAll('mapbox-address-autofill');
-    for (const autofill of elements) {
-        autofill.accessToken = ACCESS_TOKEN;
-        
-        // full adress id for ai: 4780 Add event listener for address selection
-        autofill.addEventListener('retrieve', (event) => {
-            const address = event.detail;
-            // Create full address string from components
-            const formattedAddress = [
-                address.feature.properties.address,
-                address.feature.properties.context.place,
-                address.feature.properties.context.region,
-                address.feature.properties.context.postcode
-            ].filter(Boolean).join(', ');
-            
-            // Update both visible input and hidden field
-            document.getElementById('addressInput').value = formattedAddress;
-            document.getElementById('formattedAddress').value = formattedAddress;
-            
-            // Enable the next button
-            document.getElementById('nextQuestionButton').disabled = false;
-        });
+        window.addEventListener('load', () => {
+            const elements = document.querySelectorAll('mapbox-address-autofill');
+            for (const autofill of elements) {
+                autofill.accessToken = ACCESS_TOKEN;
+                
+                // Enhanced event listener for address selection
+                autofill.addEventListener('retrieve', (event) => {
+                    const address = event.detail;
+                    const feature = address.feature;
+                    const properties = feature.properties;
+                    const context = properties.context;
+                    
+                    // Extract address components
+                    const streetNumber = properties.address_number || '';
+                    const street = properties.street || '';
+                    const city = context.place || '';
+                    const state = context.region || '';
+                    const postalCode = context.postcode || '';
+                    const country = context.country || '';
 
-          // Add input event listener for manual address entry
-        autofill.querySelector('input').addEventListener('input', (e) => {
-            const value = e.target.value;
-            document.getElementById('formattedAddress').value = value;
-            // Only enable next button if address is long enough
-            document.getElementById('nextQuestionButton').disabled = value.length < 10;
+                    // Create formatted address
+                    const formattedAddress = [
+                        `${streetNumber} ${street}`.trim(),
+                        city,
+                        state,
+                        postalCode,
+                        country
+                    ].filter(Boolean).join(', ');
+
+                    // Update visible input
+                    document.getElementById('addressInput').value = formattedAddress;
+
+                    // Update hidden fields
+                    document.getElementById('street_number').value = streetNumber;
+                    document.getElementById('route').value = street;
+                    document.getElementById('city').value = city;
+                    document.getElementById('state').value = state;
+                    document.getElementById('postal_code').value = postalCode;
+                    document.getElementById('country').value = country;
+                    document.getElementById('formattedAddress').value = formattedAddress;
+
+                    // Enable the next button
+                    document.getElementById('nextQuestionButton').disabled = false;
+                    
+                    // Log the captured data for verification
+                    console.log('Address Components:', {
+                        streetNumber,
+                        street,
+                        city,
+                        state,
+                        postalCode,
+                        country,
+                        formattedAddress
+                    });
+                });
+
+                // Keep the existing input event listener
+                autofill.querySelector('input').addEventListener('input', (e) => {
+                    const value = e.target.value;
+                    document.getElementById('formattedAddress').value = value;
+                    document.getElementById('nextQuestionButton').disabled = value.length < 10;
+                });
+            }
         });
-    }
-});
 
         function updateProgress() {
             const progress = ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
@@ -1165,24 +1206,24 @@
         }
 
         // Update form submission handler
-document.getElementById('questionForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    
-    // Ensure we get the address from the hidden field
-    const address = document.getElementById('formattedAddress').value;
-    formData.set('formatted_address', address);
-    
-    fetch('/', {
-        method: 'POST',
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData).toString()
-    })
-    .then(() => {
-        window.location.href = '/final.html';
-    })
-    .catch((error) => console.log('Form submission error:', error));
-});
+        document.getElementById('questionForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            // Ensure we get the address from the hidden field
+            const address = document.getElementById('formattedAddress').value;
+            formData.set('formatted_address', address);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                window.location.href = '/final.html';
+            })
+            .catch((error) => console.log('Form submission error:', error));
+        });
 
         // Event Listeners
         document.getElementById('prevButton').addEventListener('click', () => {
