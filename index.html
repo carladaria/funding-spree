@@ -46,6 +46,11 @@
             display: flex;
             align-items: center;
             text-decoration: none;
+            transition: transform 0.3s ease; /* Add transition for the logo */
+        }
+
+        .logo:hover {
+            transform: translateX(10px); /* Move logo 1 cm (10px) to the right on hover */
         }
 
         .logo img {
@@ -128,7 +133,7 @@
 
         .start-button:hover {
             background-color: #133863; /* Change background color on hover */
-            transform: scale(1.4); /* Scale the button to 1.4 on hover */
+            transform: scale(1.2); /* Scale the button to 1.4 on hover */
         }
 
         /* Mission section styles */
